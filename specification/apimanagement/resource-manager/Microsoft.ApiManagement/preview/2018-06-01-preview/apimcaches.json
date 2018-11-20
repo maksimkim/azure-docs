@@ -1,0 +1,411 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "ApiManagementClient",
+    "description": "Use these REST APIs for performing operations on Cache entity in your Azure API Management deployment. Caches are used to manage the visibility of products to developers. Each API Management service instance comes with the following immutable system caches whose membership is automatically managed by API Management.  - **Administrators** - Azure subscription administrators are members of this cache. - **Developers** - Authenticated developer portal users fall into this cache. - **Guests** - Unauthenticated developer portal users are placed into this cache. In addition to these system caches, administrators can create custom caches or [leverage external caches in associated Azure Active Directory tenants](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-aad#how-to-add-an-external-azure-active-directory-cache). Custom and external caches can be used alongside system caches in giving developers visibility and access to API products. For example, you could create one custom cache for developers affiliated with a specific partner organization and allow them access to the APIs from a product containing relevant APIs only. A user can be a member of more than one cache.",
+    "version": "2018-06-01-preview"
+  },
+  "host": "management.azure.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "security": [
+    {
+      "azure_auth": [
+        "user_impersonation"
+      ]
+    }
+  ],
+  "securityDefinitions": {
+    "azure_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+      "flow": "implicit",
+      "description": "Azure Active Directory OAuth2 Flow.",
+      "scopes": {
+        "user_impersonation": "impersonate your user account"
+      }
+    }
+  },
+  "paths": {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/caches": {
+      "get": {
+        "tags": [
+          "Caches"
+        ],
+        "operationId": "Cache_ListByService",
+        "description": "Lists a collection of caches defined within a service instance.",
+        "parameters": [
+          {
+            "$ref": "./apimanagement.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/ServiceNameParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/TopQueryParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/SkipQueryParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/SubscriptionIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lists a collection of Cache entities.",
+            "schema": {
+              "$ref": "#/definitions/CacheCollection"
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "x-ms-odata": "#/definitions/CacheGetContract"
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/caches/{cacheId}": {
+      "head": {
+        "tags": [
+          "Caches"
+        ],
+        "operationId": "Cache_GetEntityTag",
+        "description": "Gets the entity state (Etag) version of the cache specified by its identifier.",
+        "parameters": [
+          {
+            "$ref": "./apimanagement.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/ServiceNameParameter"
+          },
+          {
+            "$ref": "#/parameters/CacheIdParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/SubscriptionIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Specified cache entity exists and current entity state version is present in the ETag header.",
+            "headers": {
+              "ETag": {
+                "description": "Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.",
+                "type": "string"
+              }
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "./apimanagement.json#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Caches"
+        ],
+        "operationId": "Cache_Get",
+        "description": "Gets the details of the cache specified by its identifier.",
+        "parameters": [
+          {
+            "$ref": "./apimanagement.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/ServiceNameParameter"
+          },
+          {
+            "$ref": "#/parameters/CacheIdParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/SubscriptionIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The response body contains the specified Cache entity.",
+            "schema": {
+              "$ref": "#/definitions/CacheGetContract"
+            },
+            "headers": {
+              "ETag": {
+                "description": "Current entity state version. Should be treated as opaque and used to make conditional HTTP requests.",
+                "type": "string"
+              }
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "./apimanagement.json#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Caches"
+        ],
+        "operationId": "Cache_CreateOrUpdate",
+        "description": "Creates or Updates a cache.",
+        "parameters": [
+          {
+            "$ref": "./apimanagement.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/ServiceNameParameter"
+          },
+          {
+            "$ref": "#/parameters/CacheIdParameter"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CachePutContract"
+            },
+            "description": "Create parameters."
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/IfMatchOptionalParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/SubscriptionIdParameter"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Cache was created succesfully.",
+            "schema": {
+              "$ref": "#/definitions/CacheGetContract"
+            }
+          },
+          "200": {
+            "description": "Cache already exists.",
+            "schema": {
+              "$ref": "#/definitions/CacheGetContract"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "./apimanagement.json#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Caches"
+        ],
+        "operationId": "Cache_Update",
+        "description": "Updates the details of the cache specified by its identifier.",
+        "x-ms-examples": {
+          "ApiManagementUpdateCache": {
+            "$ref": "./examples/ApiManagementUpdateCache.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "./apimanagement.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/ServiceNameParameter"
+          },
+          {
+            "$ref": "#/parameters/CacheIdParameter"
+          },
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CachePatchContract"
+            },
+            "description": "Update parameters."
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/IfMatchRequiredParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/SubscriptionIdParameter"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The cache details were successfully updated."
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "./apimanagement.json#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Caches"
+        ],
+        "operationId": "Cache_Delete",
+        "description": "Deletes specific cache of the API Management service instance.",
+        "x-ms-examples": {
+          "ApiManagementDeleteCache": {
+            "$ref": "./examples/ApiManagementDeleteCache.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "./apimanagement.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/ServiceNameParameter"
+          },
+          {
+            "$ref": "#/parameters/CacheIdParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/IfMatchRequiredParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "./apimanagement.json#/parameters/SubscriptionIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The cache was successfully deleted."
+          },
+          "204": {
+            "description": "The cache was successfully deleted."
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "./apimanagement.json#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CacheCollection": {
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CacheGetContract"
+          },
+          "description": "Page values."
+        },
+        "nextLink": {
+          "type": "string",
+          "description": "Next page link if any."
+        }
+      },
+      "description": "Paged Cache list representation."
+    },
+    "CacheGetContract": {
+      "properties": {
+        "properties": {
+          "x-ms-client-flatten": true,
+          "$ref": "#/definitions/CacheContractProperties",
+          "description": "Cache entity contract properties."
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "./apimanagement.json#/definitions/Resource"
+        }
+      ],
+      "description": "Contract details."
+    },
+    "CachePutContract": {
+      "properties": {
+        "properties": {
+          "x-ms-client-flatten": true,
+          "$ref": "#/definitions/CacheContractProperties",
+          "description": "Properties supplied to Create or Update Cache operation.",
+          "required": [
+            "connectionString"
+          ]
+        }
+      },
+      "description": "Parameters supplied to the Create Cache operation."
+    },
+    "CachePatchContract": {
+      "properties": {
+        "properties": {
+          "x-ms-client-flatten": true,
+          "$ref": "#/definitions/CacheContractProperties",
+          "description": "Cache entity update contract properties."
+        }
+      },
+      "description": "Parameters supplied to the Update Cache operation."
+    },
+    "CacheContractProperties": {
+      "description": "Cache contract Properties.",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Cache description",
+          "maxLength": 2000
+        },
+        "resourceId": {
+          "type": "string",
+          "description": "Management Uri of the Cache Resource in External System Apim cache resource points to. E.g. this url can be the Arm Resource Id of Azure Redis Cache resource",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "connectionString": {
+          "type": "string",
+          "description": "Runtime connection information to cache. Either connection string conforming to StackExchange.Redis format (see https://stackexchange.github.io/StackExchange.Redis/Configuration.html) or a name of existing 'property' resource enclosed in double curly braces which contains such connection string",
+          "minLength": 1,
+          "maxLength": 300
+        }
+      }
+    }
+  },
+  "parameters": {
+    "CacheIdParameter": {
+      "name": "cacheId",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "description": "Cache identifier. Must be either identifier of existing Azure region without spaces or literal 'default' (e.g. 'westus2', 'eastus', 'default'). Must be unique in the current API Management service instance.",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)",
+      "x-ms-parameter-location": "method"
+    }
+  }
+}
